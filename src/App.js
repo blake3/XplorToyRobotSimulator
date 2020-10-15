@@ -1,12 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import RobotSimulator from './components/RobotSimulator';
+import Instructions from './components/Instructions';
 import './App.css';
 
 function App() {
   return (
-    <div>
-      <h1 className="header">Toy Robot Simulator</h1>
-    </div>
+    <Container>
+      <Row>
+        <h1 className="header">Toy Robot Simulator</h1>
+      </Row>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Body>
+              <Instructions />
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <RobotSimulator />
+          </Card>
+        </Col>
+      </Row>
+    </Container>
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
