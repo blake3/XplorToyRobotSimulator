@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CommandInput from '../CommandInput';
 import { submitCommand } from '../../redux/reducer';
 
-import './RobotSimulator.styles.scss';
+import './RobotSimulator.styles.css';
 
 class RobotSimulator extends React.Component {
 

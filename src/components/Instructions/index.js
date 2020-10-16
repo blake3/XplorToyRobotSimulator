@@ -35,7 +35,7 @@ class Instructions extends React.Component {
         </p>
         <ul>
           {commands.map(({name, explanation}) =>
-            <li>
+            <li key={name}>
               <strong>{name}</strong>
               <p>{explanation}</p>
             </li>)}
