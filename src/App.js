@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Card, Col, Container, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import RobotSimulator from './components/RobotSimulator';
@@ -15,35 +15,17 @@ function App() {
       </Row>
       <Row>
         <Col>
-          <Card>
-            <Card.Body>
+          <Card className="content">
               <Instructions />
-            </Card.Body>
           </Card>
         </Col>
         <Col>
-          <Card>
+          <Card className="content">
             <RobotSimulator />
           </Card>
         </Col>
       </Row>
     </Container>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 
