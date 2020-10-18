@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { Card, Col, Container, Row } from 'reactstrap';
+import { Card, Col, Row } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import RobotSimulator from './components/RobotSimulator';
@@ -12,11 +12,11 @@ import './App.css';
 function App() {
   return (
     <Provider store={store}>
-      <Container>
-        <Row>
+      {/* <div> */}
+        {/* <Row>
           <h1 className="header">Toy Robot Simulator</h1>
-        </Row>
-        <Row>
+        </Row> */}
+        <Row className="content-row">
           <Col>
             <Card className="content">
                 <Instructions />
@@ -28,7 +28,7 @@ function App() {
             </Card>
           </Col>
         </Row>
-      </Container>
+      {/* </div> */}
     </Provider>
   );
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import CommandInput from '../CommandInput';
+import Report from '../Report';
 import { submitCommand } from '../../redux/reducer';
 
 import './RobotSimulator.styles.css';
@@ -10,11 +11,11 @@ class RobotSimulator extends React.Component {
 
 
   render() {
-    const {showReport, robotPosition, error, submitCommand } = this.props;
+    const {report, error, submitCommand } = this.props;
     return (
-      <div>
+      <div className="right-content">
         <CommandInput error={error} submitCommand={submitCommand}/>
-        
+        <Report report={report}/>
       </div>
     )
   }
@@ -22,8 +23,7 @@ class RobotSimulator extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  showReport: state.showReport,
-  robotPosition: state.robotPosition,
+  report: state.report,
   error: state.error,
 });
 

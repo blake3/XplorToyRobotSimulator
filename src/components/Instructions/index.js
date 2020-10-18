@@ -10,7 +10,7 @@ class Instructions extends React.Component {
       },
       {
         name: "MOVE",
-        explanation: "Moves the toy robot one unit forward in the direction it is currently facing."
+        explanation: "Moves the toy robot one unit forward in the direction it is currently facing"
       },
       {
         name: "LEFT",

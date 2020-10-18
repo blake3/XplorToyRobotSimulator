@@ -1,11 +1,11 @@
 import { createAction, handleActions } from 'redux-actions';
 
-import { RobotPosition } from '../lib/robot';
+import { Robot } from '../lib/robot';
 
 const INITIAL_STATE = {
-    showReport: false,
-    robotPosition: null,
-    error: ''
+    report: "",
+    robot: new Robot(),
+    error: "",
 };
 
 const ActionTypes = {
@@ -16,10 +16,11 @@ export const submitCommand =  createAction(ActionTypes.SUBMIT_COMMAND)
 
 const reducer = handleActions({
     [ActionTypes.SUBMIT_COMMAND]: (state, action) => {
-        const command = action.payload.toLowerCase();
-
+        const { error, report } = state.robot.followCommand(action.payload);
         return {
             ...state,
+            error: error || "",
+            report: report || "",
         }
     },
 }, INITIAL_STATE);

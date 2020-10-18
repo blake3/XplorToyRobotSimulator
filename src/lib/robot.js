@@ -39,10 +39,10 @@ export class Robot{
     }
 
     move() {
-        const invalidMoveEast = this.x === 4 && this.facing == Direction.EAST;
-        const invalidMoveWest = this.x === 0 && this.facing == Direction.WEST;
-        const invalidMoveSouth = this.y === 0 && this.facing == Direction.SOUTH;
-        const invalidMoveNorth = this.y === 4 && this.facing == Direction.NORTH;
+        const invalidMoveEast = this.x === 4 && this.facing === Direction.EAST;
+        const invalidMoveWest = this.x === 0 && this.facing === Direction.WEST;
+        const invalidMoveSouth = this.y === 0 && this.facing === Direction.SOUTH;
+        const invalidMoveNorth = this.y === 4 && this.facing === Direction.NORTH;
         const invalidMove = invalidMoveEast || invalidMoveWest || invalidMoveSouth || invalidMoveNorth;
         if (invalidMove) {
             return;
@@ -106,6 +106,10 @@ export class Robot{
             action = commandUpper.slice(0, separatorIndex);
             parameters = commandUpper.slice(separatorIndex + 1).replace(" ", "").split(",");
         }
+        const validActions = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"];
+        if (!validActions.includes(action)) {
+            return { error: "Unknown command"}
+        }
         
         if (action === "PLACE") {
             if (parameters.length !== 3) {
@@ -132,6 +136,7 @@ export class Robot{
                         break;
                     default:
                         error = "Unknown command";
+                        break;
                 }
             }
         }
