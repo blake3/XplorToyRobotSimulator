@@ -18,7 +18,7 @@ class CommandInput extends React.Component {
     const hasError = error !== "";
     return (
       <div className="command-input">
-        <InputGroup className="command-input">
+        <InputGroup>
           <Input invalid={hasError} valid={!hasError && this.inputRef} placeholder="Enter a command and press Enter" onKeyPress={this.handleKeyPress} ref={(ref) => {this.inputRef = ref}}/>
           {hasError && <FormFeedback>{error}</FormFeedback>}
           {!hasError && <FormFeedback valid>Successfully processed robot command</FormFeedback>}

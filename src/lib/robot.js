@@ -139,6 +139,8 @@ export class Robot{
                         break;
                 }
             }
+        } else {
+            error = "Ignoring command as robot has not been placed";
         }
         return { report, error };        
     }
