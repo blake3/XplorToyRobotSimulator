@@ -425,7 +425,7 @@ test("only processes commands after first place", () => {
     robot.followCommand("MOVE");
     const result1 = robot.followCommand("REPORT");
     checkRobotValues(robot, false);
-    expect(result1.error).toBe(undefined);
+    expect(result1.error).toBe("Ignoring command as robot has not been placed");
     expect(result1.report).toBe(undefined);
 
     robot.followCommand("PLACE 0,2,NORTH");
