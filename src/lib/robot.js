@@ -19,6 +19,7 @@ const directionDescriptions = {
 export class Robot{
     constructor() {
         this.isPlaced = false;
+        this.blockedSquares = [];
     }
 
     place(x, y, facing) {
@@ -31,6 +32,12 @@ export class Robot{
 
         if ( xIsValid && yIsValid && facingIsValid) {
             // The starting position is valid
+            for (let i = 0; i < this.blockedSquares.length; i++) {
+                const square = this.blockedSquares[i];
+                if (square.x === xNum && square.y === yNum) {
+                    return;
+                }
+            }
             this.isPlaced = true;
             this.x = xNum;
             this.y = yNum;
@@ -48,22 +55,31 @@ export class Robot{
             return;
         }
         // If we get to this point we know the robot is allowed to move
+        let newX = this.x, newY = this.y;
         switch (this.facing) {
             case Direction.NORTH:
-                this.y += 1;
+                newY += 1;
                 break;
             case Direction.SOUTH:
-                this.y -= 1;
+                newY -= 1;
                 break;
             case Direction.EAST:
-                this.x += 1;
+                newX += 1;
                 break;
             case Direction.WEST:
-                this.x -= 1;
+                newX -= 1;
                 break;
             default:
                 throw Error("No direction to move in");
         }
+        for (let i = 0; i < this.blockedSquares.length; i++) {
+            const square = this.blockedSquares[i];
+            if (square.x === newX && square.y === newY) {
+                return;
+            }
+        }
+        this.x = newX;
+        this.y = newY;
     }
 
     rotateRight() {
@@ -82,6 +98,16 @@ export class Robot{
             throw Error("No direction to start rotation")
         }
         this.facing = (this.facing - 90 + 360) % 360;
+    }
+
+    block(x, y) {
+        const xNum = parseFloat(x);
+        const yNum = parseFloat(y);
+        const xIsValid = Number.isInteger(xNum) && 0 <= xNum && xNum <= 4;
+        const yIsValid = Number.isInteger(yNum) && 0 <= yNum && yNum <= 4;
+        if (xIsValid && yIsValid) {
+            this.blockedSquares.push({x: xNum, y: yNum});
+        }
     }
 
     report() {
@@ -106,7 +132,7 @@ export class Robot{
             action = commandUpper.slice(0, separatorIndex);
             parameters = commandUpper.slice(separatorIndex + 1).replace(" ", "").split(",");
         }
-        const validActions = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"];
+        const validActions = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT", "BLOCK"];
         if (!validActions.includes(action)) {
             return { error: "Unknown command"}
         }
@@ -116,6 +142,12 @@ export class Robot{
                 error = "Three parameters required when placing";
             } else {
                 this.place(parameters[0].trim(), parameters[1].trim(), parameters[2].trim());
+            }
+        } else if (action === "BLOCK") {
+            if (parameters.length !== 2) {
+                error = "Two parameters required when blocking";
+            } else {
+                this.block(parameters[0].trim(), parameters[1].trim())
             }
         } else if (this.isPlaced) {
             if (parameters !== "") {

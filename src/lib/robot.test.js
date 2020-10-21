@@ -16,7 +16,10 @@ function checkRobotValues(robot, expectedIsPlaced, expectedX, expectedY, expecte
 
 test("can initialise robot", () => {
     const robot = new Robot();
+    console.log(robot.blockedSquares);
     expect(robot.isPlaced).toBeFalsy();
+    expect(Array.isArray(robot.blockedSquares)).toBeTruthy();
+    expect(robot.blockedSquares.length).toBe(0);
 });
 
 test("cannot place robot with non-integer position", () => {
@@ -492,4 +495,52 @@ test("handles multiple places", () => {
     robot.followCommand("RIGHT");
     const result4 = robot.followCommand("REPORT");
     expect(result4.report).toBe("4,0,WEST");
+})
+
+// ========
+// New Command
+// ========
+
+
+test("it can read a BLOCK command", () => {
+    const robot = new Robot();
+    robot.block(0, 0);
+})
+
+test("it will record blocked squares", () => {
+    const robot = new Robot();
+    robot.block(1, 4);
+    expect(robot.blockedSquares.length).toBe(1);
+    expect(robot.blockedSquares[0].x).toBe(1);
+    expect(robot.blockedSquares[0].y).toBe(4);
+})
+
+test("blocking prevents placing on that square", () => {
+    const robot = new Robot();
+    robot.block(2, 3);
+    robot.followCommand("PLACE 2, 3, NORTH");
+    expect(robot.isPlaced).toBeFalsy();
+})
+
+test("blocking prevents movement into the square", () => {
+    const robot = new Robot();
+    robot.block(2,2);
+    robot.followCommand("PLACE 2, 3, SOUTH");
+    robot.followCommand("MOVE");
+    const result = robot.followCommand("REPORT");
+    expect(result.report).toBe("2,3,SOUTH");
+})
+
+test("can process block command", () => {
+    const robot = new Robot();
+    robot.followCommand("BLOCK 3,3");
+    expect(robot.blockedSquares.length).toBe(1);
+    expect(robot.blockedSquares[0].x).toBe(3);
+    expect(robot.blockedSquares[0].y).toBe(3);
+})
+
+test("handles invalid block command", () => {
+    const robot = new Robot();
+    const result = robot.followCommand("BLOCK 3");
+    expect(result.error).toBe("Two parameters required when blocking");
 })
